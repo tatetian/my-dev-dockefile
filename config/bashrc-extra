@@ -1,0 +1,30 @@
+# detect OS
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    ls_params='--color=auto'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    ls_params='-G'
+else
+    ls_params=''
+fi
+
+if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
+    export TERM=xterm-256color
+fi
+
+alias ls="ls ${ls_params}"
+alias cd..="cd .."
+alias cd....="cd ../.."
+alias l="ls -alp"
+alias h="history"
+alias grep="grep --color=auto -n"
+
+# disable Ctrl+S to prevent console from accidentally freezing
+bind -r '\C-s'
+stty -ixon
+
+set -o vi
+
+source ~/.git-prompt.sh
+export PS1='┌─[\H|\[\e[38;5;32m\]\w\[\e[0m\]\[\e[38;5;240m\]$(__git_ps1 " (%s)")\[\e[0m\]]\n└─╼ '
+
+alias git_for_intel="git -c user.name=\"Tian Hongliang\" -c user.email=\"hongliang.tian@intel.com\""
